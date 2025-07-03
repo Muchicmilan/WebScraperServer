@@ -41,7 +41,7 @@ export async function processListPage(
         console.log(`[Service:processListPage] Applying interaction strategy: ${strategy || 'none'}`);
 
         switch (strategy) {
-            case 'infiniteScroll':
+            case 'incrementalInfiniteScroll':
                 itemEvalResults = await handleIncrementalInfiniteScroll(page, config);
                 break;
 

@@ -1,7 +1,7 @@
 import {Schema} from "mongoose";
 
 export interface IInteractionOptions {
-    interactionStrategy?: 'none' | 'infiniteScroll' | 'loadMoreButton' | 'fixedScrolls';
+    interactionStrategy?: 'none' | 'incrementalInfiniteScroll' | 'loadMoreButton' | 'fixedScrolls';
     maxScrolls?: number;
     scrollDelayMs?: number;
     scrollStagnationTimeoutMs?: number;
@@ -32,15 +32,18 @@ export const PageLoadWaitOptionsSchema = new Schema<IPageLoadWait>({
 
 
 export const InteractionOptionsSchema = new Schema<IInteractionOptions>({
-    interactionStrategy: { type: String, enum: ['none', 'infiniteScroll', 'loadMoreButton', 'fixedScrolls'], default: 'none', required: false },
+    interactionStrategy: { type: String, enum: ['none', 'incrementalInfiniteScroll', 'loadMoreButton', 'fixedScrolls'], default: 'none', required: false },
     maxScrolls: { type: Number, min: 1, default: 20, required: false },
     scrollDelayMs: { type: Number, min: 200, default: 500, required: false },
     scrollStagnationTimeoutMs: { type: Number, min: 1000, default: 3000, required: false },
     loadMoreButtonSelector : {type: String,required: false},
     maxClicks : {type: Number, required: false, min: 0, default: 0},
     clickDelayMs : {type: Number, required: false, min: 500, default: 1000},
-    maxItemsToScrape : {type: Number, required: false, min: 50},
+    maxItemsToScrape : {type: Number, required: false, min: 1}, // Changed min to 1
     buttonScrollAttempts: { type: Number, min: 1, default: 3, required: false },
     buttonScrollDelayMs: { type: Number, min: 100, default: 400, required: false },
+    scrollAmount: { type: Number, min: 100, default: 1000, required: false },
+    maxEmptyScrolls: { type: Number, min: 1, default: 3, required: false },
+    contentLoadWaitMs: { type: Number, min: 500, default: 2000, required: false },
 },{_id: false})
 
